@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 public class AnalysingFunctions {
     static Logger logger = LoggerFactory.getLogger(AnalysingFunctions.class);
 
+
     public static void filteredAndSortedProducts(List<Product> products, String wantedCategory) {
         logger.info("Starts filtering and sorting products");
-        if (wantedCategory == "") {
+        if (wantedCategory.equals("")) {
             throw new InvalidRequestException("No wanted Category is entered. Try again");
         }
         // Kollar om kategorin finns
@@ -37,7 +38,7 @@ public class AnalysingFunctions {
 
     public static void customersOrdersValue(List<Order> orders, String customer) {
         logger.info("Starts calculating customers orders value");
-        if(customer == ""){
+        if(customer.equals("")){
             throw new InvalidRequestException("No wanted customer is entered. Try again");
         }
         // Kollar om kunden finns
