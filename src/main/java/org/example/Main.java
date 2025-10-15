@@ -5,6 +5,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -12,7 +13,7 @@ public class Main {
         // Changeable lists
         List<Product> products = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
-
+        HashMap<String, List<Order>> ordersByCustomer = new HashMap<>();
 
         products.add(new Product(1, "Wireless Headphones", "Electronics", 150));
         products.add(new Product(2, "Yoga Mat", "Fitness", 25));
@@ -39,6 +40,11 @@ public class Main {
         orders.add(new Order(112, Arrays.asList(products.get(3), products.get(7)), "Jane Doe"));
 
         //För att datan inte laddats in via fil blir det inte så många try catch i projektet.
+
+        //Stoppar in ordrarna i en map där kundnamnet är nyckeln och ordrarna är värden
+        orders.forEach(order -> ordersByCustomer.computeIfAbsent(order.getCustomerName(), k -> new ArrayList<>()).add(order));
+        System.out.println(ordersByCustomer);
+
 
         Scanner scanner = new Scanner(System.in);
 
