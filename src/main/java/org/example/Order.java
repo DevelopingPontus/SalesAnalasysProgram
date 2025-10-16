@@ -27,9 +27,8 @@ public class Order {
 
 @Override
     public String toString() {
-        return "Order{" +
+        return "Order: " +
                 "orderId=" + orderId +
-                ", products=" + products +
-                '}';
+                ", products=" + products + "\n";
     }
 }

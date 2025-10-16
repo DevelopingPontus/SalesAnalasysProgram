@@ -15,7 +15,7 @@ public class AnalysingFunctions {
     public static void filteredAndSortedProducts(List<Product> products, String wantedCategory) {
         logger.info("Starts filtering and sorting products");
         if (wantedCategory.equals("")) {
-            throw new InvalidRequestException("No wanted Category is entered. Try again");
+            throw new InvalidRequestException("Wanted category value not entered. Try again");
         }
         // Kollar om kategorin finns
         // Om inte, kastar en exception
@@ -35,11 +35,10 @@ public class AnalysingFunctions {
     }
 
 
-
     public static void customersOrdersValue(List<Order> orders, String customer) {
         logger.info("Starts calculating customers orders value");
-        if(customer.equals("")){
-            throw new InvalidRequestException("No wanted customer is entered. Try again");
+        if (customer.equals("")) {
+            throw new InvalidRequestException("Wanted customer value not entered. Try again");
         }
         // Kollar om kunden finns
         // Om inte, kastar en exception
@@ -59,13 +58,12 @@ public class AnalysingFunctions {
 
 
     //Streamar ordrar,
-    //formaterar streamen till stream av köpta produkter,
+    //formaterar streamen till stream av köpta produkter, om ett köp har flera produkter så plockar den fram en i taget
     //samlar och konverterar till map där produktens antal ökar med en varje gång den förekommer,
     //streamar varje entrySet
     //sorterar varje entrySet efter des värde,
     //tar de tre första
     public static void mostBought(List<Order> orders) {
-
         logger.info("Starts finding the most bought products");
         System.out.println("The most bought products: " +
                 orders.stream()

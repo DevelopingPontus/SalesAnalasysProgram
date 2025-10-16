@@ -10,6 +10,8 @@ public class Main {
     static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
         // Changeable lists
         List<Product> products = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
@@ -34,47 +36,49 @@ public class Main {
         orders.add(new Order(106, Arrays.asList(products.get(0), products.get(8), products.get(2)), "Fiona Green"));
         orders.add(new Order(107, Arrays.asList(products.get(2), products.get(9)), "George Clooney"));
         orders.add(new Order(108, Arrays.asList(products.get(1), products.get(4)), "Hannah Lee"));
-        orders.add(new Order(109, Arrays.asList(products.get(3), products.get(5)), "Isaac Newton"));
         orders.add(new Order(110, Arrays.asList(products.get(6), products.get(8)), "Jane Doe"));
+        orders.add(new Order(109, Arrays.asList(products.get(3), products.get(5)), "Isaac Newton"));
         orders.add(new Order(111, Arrays.asList(products.get(2), products.get(1)), "Jane Doe"));
         orders.add(new Order(112, Arrays.asList(products.get(3), products.get(7)), "Jane Doe"));
 
-        //För att datan inte laddats in via fil blir det inte så många try catch i projektet.
 
         //Stoppar in ordrarna i en map där kundnamnet är nyckeln och ordrarna är värden
         orders.forEach(order -> ordersByCustomer.computeIfAbsent(order.getCustomerName(), k -> new ArrayList<>()).add(order));
-        System.out.println(ordersByCustomer);
+        ordersByCustomer.forEach((key, value) -> System.out.println(key + ": " + value));
 
 
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter a category for the products you want to see");
-        //Electronics can for example be asked for
-        //fungerar med stora och små bokstäver
-        String wantedCategory = scanner.nextLine().toUpperCase();
-
-        try {
-            AnalysingFunctions.filteredAndSortedProducts(products, wantedCategory);
-        } catch (Exception e) {
-            logger.error("Error: " + e.getMessage());
-            System.out.println("Enter a valid category");
-            wantedCategory = scanner.nextLine();
-            AnalysingFunctions.filteredAndSortedProducts(products, wantedCategory);
+        boolean askingForCategory = true;
+        while (askingForCategory) {
+            try {
+                //Electronics can for example be asked for
+                //fungerar med stora och små bokstäver
+                String wantedCategory = scanner.nextLine().toUpperCase();
+                AnalysingFunctions.filteredAndSortedProducts(products, wantedCategory);
+                askingForCategory = false;
+            } catch (Exception e) {
+                logger.error("Error: " + e.getMessage());
+                System.out.println("Enter a valid category");
+            }
         }
 
         System.out.println("Enter a customer name for order history");
-        //Jane Doe kan till exempel efterfrågas
-        //fungerar med stora och små bokstäver
-        String customer = scanner.nextLine().toUpperCase();
-        try {
-            AnalysingFunctions.customersOrdersValue(orders, customer);
-        } catch (Exception e) {
-            logger.error("Error: " + e.getMessage());
-            System.out.println("Enter a valid customer");
-            customer = scanner.nextLine();
-            AnalysingFunctions.customersOrdersValue(orders, customer);
+        boolean askingForCustomer = true;
+        while (askingForCustomer) {
+            try {
+                //Jane Doe kan till exempel efterfrågas
+                //fungerar med stora och små bokstäver
+                String customer = scanner.nextLine().toUpperCase();
+                AnalysingFunctions.customersOrdersValue(orders, customer);
+                askingForCustomer = false;
+            } catch (Exception e) {
+                logger.error("Error: " + e.getMessage());
+                System.out.println("Enter a valid customer");
+            }
         }
 
+        logger.info("Starts finding the most bought products");
         AnalysingFunctions.mostBought(orders);
 
     }
